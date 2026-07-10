@@ -27,6 +27,8 @@ A polished mock of the Route 53 console built with Next.js, FastAPI, and SQLite.
    ```
 3. Open http://localhost:3000 and sign in with any email/password. The default `admin@example.com` / `demo` is prefilled.
 
+For deployment, set `frontend/.env.example`'s `NEXT_PUBLIC_API_URL` to the public FastAPI URL and set the backend `FRONTEND_ORIGINS` value to the Netlify site URL. The API health check is available at `GET /health`.
+
 ## Architecture
 
 - `backend/app/main.py` exposes REST endpoints and keeps route handlers cohesive.

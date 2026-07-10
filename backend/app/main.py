@@ -1,4 +1,5 @@
 import json
+import os
 import re
 import secrets
 import uuid
@@ -9,10 +10,15 @@ from .database import db, init_db
 from .schemas import LoginInput, ZoneInput, RecordInput, ImportInput, BulkDeleteInput
 
 app = FastAPI(title='Route 53 Clone API', version='1.0.0')
-app.add_middleware(CORSMiddleware, allow_origins=['http://localhost:3000'], allow_credentials=True, allow_methods=['*'], allow_headers=['*'])
+FRONTEND_ORIGINS = [origin.strip() for origin in os.getenv('FRONTEND_ORIGINS', 'http://localhost:3000').split(',') if origin.strip()]
+app.add_middleware(CORSMiddleware, allow_origins=FRONTEND_ORIGINS, allow_credentials=True, allow_methods=['*'], allow_headers=['*'])
 
 @app.on_event('startup')
 def startup(): init_db()
+
+@app.get('/health')
+def health():
+    return {'status': 'ok', 'service': 'route53-api'}
 
 def session_user(authorization: Optional[str] = Header(None)):
     token = authorization.removeprefix('Bearer ').strip() if authorization else ''

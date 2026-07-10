@@ -1,8 +1,9 @@
 import sqlite3
+import os
 from contextlib import contextmanager
 from pathlib import Path
 
-DATABASE_PATH = Path(__file__).resolve().parent.parent / "route53.db"
+DATABASE_PATH = Path(os.getenv("DATABASE_PATH", Path(__file__).resolve().parent.parent / "route53.db"))
 
 
 def connection():
