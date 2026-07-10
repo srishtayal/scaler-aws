@@ -49,3 +49,17 @@ For deployment, set `frontend/.env.example`'s `NEXT_PUBLIC_API_URL` to the publi
 - Bulk records: `POST /hosted-zones/{zone_id}/records/bulk-delete`
 
 List endpoints accept `q`, `page`, and `page_size`; records additionally accept `type`.
+
+## Assumptions / Mocked Data / Notes
+
+- This is a Route 53 management-plane clone; it does not perform real DNS resolution, propagation, health evaluation, or AWS API calls.
+- Login is intentionally mocked. Any non-empty email and password are accepted, and a demo user/session is persisted in SQLite.
+- IAM, AWS accounts, organizations, billing, VPC associations, Traffic Flow, Resolver, Profiles, and Health Checks are represented only by placeholder UI sections or metadata.
+- Hosted-zone IDs and record IDs are locally generated; they are not valid AWS identifiers and cannot be used with AWS.
+- Public/private hosted-zone behavior is stored as application metadata only. No VPC or network isolation is implemented.
+- Supported record types are `A`, `AAAA`, `CNAME`, `TXT`, `MX`, `NS`, `PTR`, `SRV`, and `CAA`. General fields are validated, but full RFC-level validation for every record value is not implemented.
+- BIND import supports common lines containing name, TTL, `IN`, type, and value. Complex directives, multiline records, `$INCLUDE`, and advanced routing policies may be skipped.
+- SQLite is suitable for local development and a single-instance demo. Production scaling should migrate persistence to PostgreSQL and sessions to a shared store such as Redis.
+- The static frontend requires `NEXT_PUBLIC_API_URL` at build time. The backend requires `FRONTEND_ORIGINS`; these values must be configured separately in Netlify and the backend host.
+- Browser local storage is used for the mock bearer token. Production authentication should use short-lived, server-managed sessions in secure HttpOnly cookies.
+- Data is intentionally isolated to the deployed database. The repository does not include real customer, AWS, DNS, or credential data.
