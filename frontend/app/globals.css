@@ -90,6 +90,8 @@ th,td{padding:10px 8px}
 .top-right{display:none}
 }
 .title-actions{display:flex;gap:8px;align-items:center}
+.aws-logo{display:block;width:120px;height:76px;object-fit:contain;margin:0 auto 6px}
+.brand-logo{display:block;width:58px;height:38px;object-fit:contain;filter:brightness(0) invert(1)}
 .file-btn{display:inline-block}
 .file-btn input{display:none}
 kbd{border:1px solid #b6bec2;border-radius:3px;padding:1px 4px;font-size:11px;background:#f7f8f8;color:#536d7a}
