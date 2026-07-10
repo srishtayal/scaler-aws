@@ -1,0 +1,7 @@
+frontend/node_modules/
+frontend/.next/
+backend/.venv/
+backend/__pycache__/
+backend/app/__pycache__/
+backend/route53.db
+.DS_Store
