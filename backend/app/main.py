@@ -20,6 +20,10 @@ def startup(): init_db()
 def health():
     return {'status': 'ok', 'service': 'route53-api'}
 
+@app.get('/')
+def root():
+    return {'service': 'route53-api', 'health': '/health', 'docs': '/docs'}
+
 def session_user(authorization: Optional[str] = Header(None)):
     token = authorization.removeprefix('Bearer ').strip() if authorization else ''
     with db() as conn:
